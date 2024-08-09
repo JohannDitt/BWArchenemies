@@ -5,6 +5,8 @@ import re
 
 import glob
 
+from results import get_score
+
 def check_string(x):
 
     if "=" in x:
@@ -29,7 +31,7 @@ def get_information(x):
     home = x[:result_center-2].strip()
     
     away = ""
-    if ")" in x[result_center:]:
+    if ")" in x[result_center:result_center+10]:
        away = x[x.index(")")+1:].strip()
     else:
         away = x[result_center+3:].strip()
@@ -137,6 +139,14 @@ def get_data(filename):
     
     return dataframe
 
+def check_winner(score):
+    if score == 0:
+        return "draw"
+    if score > 0:
+        return "home"
+    if score < 0:
+        return "away"
+
 
 files_old = glob.glob("data/deutschland/archive/*/*/1-bundesliga.txt")
 files_new = glob.glob("data/deutschland/*/1-bundesliga.txt")
@@ -146,6 +156,20 @@ files.remove("data/deutschland/2024-25/1-bundesliga.txt")
 data_bundesliga = [get_data(filename) for filename in files]
 
 data = pd.concat(data_bundesliga, ignore_index=True)
+data["home_goals"] = data.final_result.apply(lambda x: get_score(x, True))
+data["away_goals"] = data.final_result.apply(lambda x: get_score(x, False))
+data["score"] = data.home_goals - data.away_goals
+data["winner"] = data.score.apply(lambda x :check_winner(x))
+data = data.drop(columns="score")
+data = data.sort_values(["date"], ignore_index=True)
+
+teams = {"offenheim": "TSG 1899 Hoffenheim",
+        "TSG Hoffenheim": "TSG 1899 Hoffenheim",
+        "Bayern München       # Bayern Deutscher Meister 2019/2020": "Bayern München",
+        "Blau-Weiß 90 Berlin (-1992)": "Blau-Weiß 90 Berlin",
+        "SC Tasmania 1900 Berlin (-1973)": "SC Tasmania 1900 Berlin",
+        "Bayer Leverkusen": "Bayer 04 Leverkusen"}
+data = data.replace(teams)
 
 print(data.tail(10))
 
