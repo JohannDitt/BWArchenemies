@@ -67,14 +67,16 @@ def clean_dataset(dataset):
     
     return dataset
 
-dataset_list = glob.glob("data/deutschland-master/*/*/*1.csv")
 
-print(dataset_list)
+if __name__=="__main__":
+    dataset_list = glob.glob("data/deutschland-master/*/*/*1.csv")
 
-datalist = [clean_dataset(pd.read_csv(dataset)) for dataset in dataset_list]
+    print(dataset_list)
 
-df_germany = pd.concat(datalist, ignore_index=True)
+    datalist = [clean_dataset(pd.read_csv(dataset)) for dataset in dataset_list]
 
-print(df_germany.info())
+    df_germany = pd.concat(datalist, ignore_index=True)
 
-print(df_germany.Round.unique())
+    print(df_germany.info())
+
+    print(df_germany.Round.unique())

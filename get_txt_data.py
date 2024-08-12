@@ -150,7 +150,9 @@ def check_winner(score):
 
 files_old = glob.glob("data/deutschland/archive/*/*/1-bundesliga.txt")
 files_new = glob.glob("data/deutschland/*/1-bundesliga.txt")
-files = files_old+files_new
+files_first = glob.glob("data/deutschland/*/1-bundesliga-i.txt")
+files_second = glob.glob("data/deutschland/*/1-bundesliga-ii.txt")
+files = files_old+files_new+files_first+files_second
 files.remove("data/deutschland/2024-25/1-bundesliga.txt")
 
 data_bundesliga = [get_data(filename) for filename in files]
