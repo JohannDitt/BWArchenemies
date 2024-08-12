@@ -141,11 +141,11 @@ def get_data(filename):
 
 def check_winner(score):
     if score == 0:
-        return "draw"
+        return 1 #draw, nobody wins
     if score > 0:
-        return "home"
+        return 0 #home team wins
     if score < 0:
-        return "away"
+        return 2 #visiting team wins
 
 
 files_old = glob.glob("data/deutschland/archive/*/*/1-bundesliga.txt")
