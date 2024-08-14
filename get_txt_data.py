@@ -135,7 +135,7 @@ def get_data(filename):
             data_result.append(result)  
     
 
-    dataframe = pd.DataFrame({"matchday": data_matchday, "date": data_date, "home_team": data_home, "final_result": data_result, "away_team": data_away, })
+    dataframe = pd.DataFrame({"matchday": data_matchday, "date": data_date, "home_team": data_home, "final_result": data_result, "away_team": data_away})
     
     return dataframe
 
