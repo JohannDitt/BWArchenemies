@@ -4,7 +4,7 @@ import seaborn as sns
 
 from Metrics import *
 
-from sklearn.metrics import accuracy_score, confusion_matrix, root_mean_squared_error
+from sklearn.metrics import accuracy_score, confusion_matrix, root_mean_squared_error, make_scorer
 
 df_data = pd.read_csv("data/bundesliga.csv")
 y_target = df_data.winner.values
@@ -21,9 +21,9 @@ win_prob = win_prob.values
 y_pred = np.ones((len(df_data), len(win_prob))) * win_prob
 print(y_pred)
     
-
-avg_rps = avg_ranked_probability_score(y_pred, y_target)
-
+avg_RPS = make_scorer(avg_ranked_probability_score, needs_proba=True, greater_is_better=False, response_methode=["predict_proba", "predict"])
+#avg_rps = avg_RPS(y_true=y_target, y_pred_proba=y_pred)
+avg_rps = avg_ranked_probability_score(y_target, y_pred)
 print(avg_rps)
 
 
