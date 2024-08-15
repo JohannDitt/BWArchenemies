@@ -146,7 +146,7 @@ if __name__ == "__main__":
     x_max = np.array([5, 5, 5, 5, 1.5, 1.5, 1.5, 1.5])
     x_min = np.array([0, 0, -5, -5, 0, 0, 0, 0])
     bounds = (x_min, x_max)
-    options = {"c1": 0.5, "c2": 0.3, "w": 0.9}
+    options = {"c1": 0.3, "c2": 0.5, "w": 0.9}
     
     optimizer = GlobalBestPSO(n_particles=50, dimensions=8, options=options, bounds=bounds)
     cost, pos = optimizer.optimize(total_goal_prediction_error, 200)
@@ -155,4 +155,4 @@ if __name__ == "__main__":
     
     print(df_germany_train.tail(10))
     
-    df_germany_train.to_csv("data/bundesliga_ratings.csv")
+    #df_germany_train.to_csv("data/bundesliga_ratings.csv")
