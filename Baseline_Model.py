@@ -6,7 +6,7 @@ from Metrics import *
 
 from sklearn.metrics import accuracy_score, confusion_matrix, root_mean_squared_error
 
-df_data = pd.read_csv("data/bundesliga.csv")
+df_data = pd.read_csv("/Users/nilsweigeldt/Desktop/capstone2/BWArchenemies/data/bundesliga.csv")
 y_target = df_data.winner.values
 
 """
