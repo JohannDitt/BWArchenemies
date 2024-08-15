@@ -1,6 +1,8 @@
 import numpy as np
 
-def ranked_probability_score(y_probs, y):
+from sklearn.metrics import make_scorer
+
+def ranked_probability_score(y_true, y_pred):
     """Returns the ranked probability score (RPS) for a single match
 
     Args:
@@ -11,10 +13,10 @@ def ranked_probability_score(y_probs, y):
         float: ranked probability score
     """
         
-    r = len(y_probs)
+    r = len(y_pred)
     
     a = ()
-    match y:
+    match y_true:
         case 0:
             a = (1,0,0)
         case 1:
@@ -26,13 +28,13 @@ def ranked_probability_score(y_probs, y):
     for i in range(r-1):
         rps_term = 0
         for j in range(i+1):
-            rps_term += y_probs[j]-a[j]
+            rps_term += y_pred[j]-a[j]
         
         rps += np.square(rps_term)
         
     return rps/(r-1)
 
-def avg_ranked_probability_score(y_pred_prob, y_true):
+def avg_ranked_probability_score(y_true, y_pred_prob):
     """Returns the average rps
 
     Args:
@@ -47,10 +49,9 @@ def avg_ranked_probability_score(y_pred_prob, y_true):
     avg_rps = 0
     
     for idx, y in enumerate(y_true):
-        avg_rps += ranked_probability_score(y_pred_prob[idx], y)/n
+        avg_rps += ranked_probability_score(y, y_pred_prob[idx])/n
     
     return avg_rps
-
 
 if __name__ == "__main__":
     
