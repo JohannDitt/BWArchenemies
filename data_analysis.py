@@ -17,7 +17,7 @@ plt.show()
 #scored home and away goals
 plt.hist(df_bundesliga.home_goals, color="red", histtype="step", label="Home Goals", bins=n_bins, range=(0,n_bins))
 
-plt.hist(df_bundesliga.away_goals, color="green", histtype="step", label="Visitor Goals", bins=n_bins, range=(0,n_bins))
+plt.hist(df_bundesliga.away_goals, color="blue", histtype="step", label="Visitor Goals", bins=n_bins, range=(0,n_bins))
 plt.xlabel("goals")
 plt.ylabel("counts/goal")
 plt.legend()

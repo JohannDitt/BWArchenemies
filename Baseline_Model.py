@@ -6,7 +6,7 @@ from Metrics import *
 
 from sklearn.metrics import accuracy_score, confusion_matrix, root_mean_squared_error, make_scorer
 
-df_data = pd.read_csv("/Users/nilsweigeldt/Desktop/capstone2/BWArchenemies/data/bundesliga.csv")
+df_data = pd.read_csv("data/bundesliga.csv")
 y_target = df_data.winner.values
 
 """
@@ -36,6 +36,10 @@ y_target_hg = df_data.home_goals.values
 y_target_ag = df_data.away_goals.values
 y_target_diff = y_target_hg - y_target_ag
 
+y_target_total = y_target_ag + y_target_hg
+total_mean = np.mean(y_target_total)
+
+
 home_score_mean = np.mean(y_target_hg)
 away_score_mean = np.mean(y_target_ag)
 
@@ -45,7 +49,14 @@ y_pred_hg = np.ones(len(y_target_hg)) * home_score_mean
 y_pred_ag = np.ones(len(y_target_ag)) * away_score_mean
 y_pred_diff = y_pred_hg - y_pred_ag
 
+y_pred_total = y_pred_ag + y_pred_hg
+
 rmse_hg = root_mean_squared_error(y_pred_hg, y_target_hg)
 rmse_ag = root_mean_squared_error(y_pred_ag, y_target_ag)
 rmse_diff = root_mean_squared_error(y_pred_diff, y_target_diff)
-print(rmse_hg, rmse_ag, rmse_diff)
+rmse_total = root_mean_squared_error(y_target_total, y_pred_total)
+
+print(f"RMSE Home: {rmse_hg}")
+print(f"RMSE Home: {rmse_ag}") 
+print(f"RMSE difference: {rmse_diff}")
+print(f"RMSE Total. {rmse_total}")
